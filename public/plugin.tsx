@@ -4,11 +4,13 @@
  */
 
 import moment from 'moment';
+import React from 'react';
 import { CoreSetup, CoreStart, Plugin, PluginInitializerContext } from '../../../src/core/public';
 import { IStorageWrapper, Storage } from '../../../src/plugins/opensearch_dashboards_utils/public';
 import { ConfigSchema } from '../common/config';
 import { ConnectionsService, createDataSourceConnectionExtension } from './data_source_connection';
 import { createQueryAssistExtension } from './query_assist';
+import { QueryAssistLanguageHint } from './query_assist/utils';
 import { PPLSearchInterceptor, SQLAsyncSearchInterceptor, SQLSearchInterceptor } from './search';
 import { setData, setStorage } from './services';
 import {
@@ -81,6 +83,13 @@ export class QueryEnhancementsPlugin
       ui: {
         query: {
           language: 'PPL',
+          languageHint: (
+            <QueryAssistLanguageHint
+              language="PPL"
+              http={core.http}
+              connectionsService={this.connectionsService}
+            />
+          ),
           search: pplSearchInterceptor,
           searchBar: {
             queryStringInput: { initialValue: 'source=<data_source>' },

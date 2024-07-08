@@ -11,7 +11,7 @@ import { IIndexPattern } from '../../../../../src/plugins/data/public';
 import { ConfigSchema } from '../../../common/config';
 import { ConnectionsService } from '../../data_source_connection';
 import { Connection } from '../../types';
-import { createQueryAssistExtension } from './create_extension';
+import { availableLanguagesByDataSource, createQueryAssistExtension } from './create_extension';
 
 const coreSetupMock = coreMock.createSetup({
   pluginStartDeps: {
@@ -33,6 +33,7 @@ jest.mock('../components/query_assist_banner', () => ({
 describe('CreateExtension', () => {
   afterEach(() => {
     jest.clearAllMocks();
+    availableLanguagesByDataSource.clear();
   });
 
   const config: ConfigSchema['queryAssist'] = {
